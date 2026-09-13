@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://render.com/schemas/intel-template-v1.json",
+  "title": "Render Intelligence Template",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "project", "default_adapter", "adapters", "content", "embedding", "mcp"],
+  "properties": {
+    "version": { "const": 1 },
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "resource_prefix"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "resource_prefix": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" }
+      }
+    },
+    "default_adapter": { "type": "string", "minLength": 1 },
+    "adapters": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "$ref": "#/$defs/adapter" }
+    },
+    "content": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["full_text_language", "chunking"],
+      "properties": {
+        "full_text_language": { "type": "string", "enum": ["simple", "english"] },
+        "chunking": { "$ref": "#/$defs/chunking" }
+      }
+    },
+    "embedding": { "$ref": "#/$defs/embedding" },
+    "mcp": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["namespace", "token_env", "filters"],
+      "properties": {
+        "namespace": { "type": "string", "pattern": "^[a-z][a-z0-9_-]*$" },
+        "token_env": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]*$" },
+        "filters": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": ["source_id", "kind", "occurred_since", "occurred_until", "entity"]
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "adapter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "enabled", "batch_size", "sequential"],
+      "properties": {
+        "kind": { "type": "string", "minLength": 1 },
+        "enabled": { "type": "boolean" },
+        "batch_size": { "type": "integer", "minimum": 1, "maximum": 1000 },
+        "sequential": { "type": "boolean" },
+        "required_env": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]*$" }
+        },
+        "config": { "type": "object" }
+      }
+    },
+    "chunking": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["strategy", "target_tokens", "overlap_tokens", "minimum_tokens"],
+      "properties": {
+        "strategy": { "enum": ["consecutive_units"] },
+        "target_tokens": { "type": "integer", "minimum": 50, "maximum": 8000 },
+        "overlap_tokens": { "type": "integer", "minimum": 0, "maximum": 2000 },
+        "minimum_tokens": { "type": "integer", "minimum": 1, "maximum": 4000 }
+      }
+    },
+    "embedding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile_id", "provider", "model", "dimension", "endpoint_env",
+        "api_key_env", "document_prefix", "query_prefix", "batch_size",
+        "normalized", "model_artifact"
+      ],
+      "properties": {
+        "profile_id": { "type": "string", "minLength": 1 },
+        "provider": { "const": "openai-compatible-private" },
+        "model": { "type": "string", "minLength": 1 },
+        "dimension": { "type": "integer", "minimum": 1, "maximum": 65535 },
+        "endpoint_env": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]*$" },
+        "api_key_env": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]*$" },
+        "document_prefix": { "type": "string" },
+        "query_prefix": { "type": "string" },
+        "batch_size": { "type": "integer", "minimum": 1, "maximum": 256 },
+        "normalized": { "type": "boolean" },
+        "model_artifact": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["repository", "filename", "revision", "pooling", "context_tokens"],
+          "properties": {
+            "repository": { "type": "string", "minLength": 1 },
+            "filename": { "type": "string", "minLength": 1 },
+            "revision": { "type": "string", "minLength": 7 },
+            "pooling": { "type": "string", "minLength": 1 },
+            "context_tokens": { "type": "integer", "minimum": 128 }
+          }
+        }
+      }
+    }
+  }
+}

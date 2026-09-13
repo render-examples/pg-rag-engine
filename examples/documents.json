@@ -1,0 +1,89 @@
+{
+  "documents": [
+    {
+      "id": "customer-interview-001",
+      "kind": "interview",
+      "title": "Acme onboarding interview",
+      "url": "https://example.com/interviews/acme",
+      "occurred_at": "2026-09-08T17:00:00Z",
+      "metadata": {"team": "product", "account": "Acme"},
+      "entities": [
+        {"type": "account", "external_id": "acme", "name": "Acme"}
+      ],
+      "units": [
+        {"author": "Researcher", "text": "What creates the most friction during onboarding?"},
+        {"author": "Customer", "text": "Mapping permissions and importing historical data take the most time."},
+        {"author": "Customer", "text": "A guided checklist and clearer progress indicators would help our administrators."}
+      ]
+    },
+    {
+      "id": "support-incident-042",
+      "kind": "support_ticket",
+      "title": "Delayed webhook delivery",
+      "url": "https://example.com/support/42",
+      "occurred_at": "2026-09-09T13:30:00Z",
+      "metadata": {"priority": "high", "status": "resolved"},
+      "entities": [
+        {"type": "account", "external_id": "globex", "name": "Globex"}
+      ],
+      "units": [
+        {"author": "Customer", "text": "Webhook events arrived roughly twenty minutes late during peak traffic."},
+        {"author": "Support", "text": "Queue saturation caused delayed delivery. Capacity was increased and the backlog cleared."},
+        {"author": "Support", "text": "We added queue depth alerts to prevent recurrence."}
+      ]
+    },
+    {
+      "id": "sales-note-017",
+      "kind": "sales_note",
+      "title": "Contoso renewal risks",
+      "url": "https://example.com/sales/contoso-renewal",
+      "occurred_at": "2026-09-10T19:15:00Z",
+      "metadata": {"stage": "renewal", "risk": "medium"},
+      "entities": [
+        {"type": "account", "external_id": "contoso", "name": "Contoso"},
+        {"type": "person", "external_id": "cfo-1", "name": "Contoso CFO"}
+      ],
+      "units": [
+        {"author": "Account Executive", "text": "Budget is approved, but the CFO requested a clearer three-year cost comparison."},
+        {"author": "Account Executive", "text": "Security review is complete. Procurement is the remaining approval step."}
+      ]
+    },
+    {
+      "id": "product-spec-003",
+      "kind": "product_spec",
+      "title": "Bulk import progress reporting",
+      "url": "https://example.com/specs/bulk-import",
+      "occurred_at": "2026-09-05T09:00:00Z",
+      "metadata": {"area": "imports", "status": "planned"},
+      "units": [
+        {"author": "Product", "text": "Display processed, failed, and remaining record counts during long-running imports."},
+        {"author": "Engineering", "text": "Checkpoint every batch so interrupted imports resume without duplicating records."}
+      ]
+    },
+    {
+      "id": "research-note-009",
+      "kind": "research_note",
+      "title": "Search relevance observations",
+      "url": "https://example.com/research/search-relevance",
+      "occurred_at": "2026-09-07T15:45:00Z",
+      "metadata": {"area": "search"},
+      "units": [
+        {"author": "Researcher", "text": "Exact keyword search performs well for product names and error codes."},
+        {"author": "Researcher", "text": "Semantic retrieval performs better for themes, paraphrases, and customer intent."},
+        {"author": "Researcher", "text": "Reciprocal rank fusion consistently gives useful mixed results."}
+      ]
+    },
+    {
+      "id": "meeting-note-101",
+      "kind": "meeting_note",
+      "title": "Weekly operations review",
+      "url": "https://example.com/meetings/ops-101",
+      "occurred_at": "2026-09-11T16:00:00Z",
+      "metadata": {"team": "operations"},
+      "units": [
+        {"author": "Operations", "text": "The ingestion workflow completed every scheduled run this week."},
+        {"author": "Engineering", "text": "Embedding latency stayed below the alert threshold and no documents failed."}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "5599332235511222779",
+  "title": "Acme Corp — Pricing & Contract Review",
+  "url": "https://app.gong.io/call?id=5599332235511222779",
+  "scheduled": "2026-03-07T14:00:00Z",
+  "started": "2026-03-07T14:05:00Z",
+  "duration": 3120,
+  "primaryUserId": "user_sarah",
+  "direction": "Conference",
+  "system": "Zoom",
+  "scope": "External",
+  "media": "Video",
+  "language": "eng",
+  "workspaceId": "ws_dummy_001"
+}

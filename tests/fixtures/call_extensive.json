@@ -1,0 +1,79 @@
+{
+  "metaData": {
+    "id": "5599332235511222779",
+    "title": "Acme Corp — Pricing & Contract Review",
+    "url": "https://app.gong.io/call?id=5599332235511222779",
+    "started": "2026-03-07T14:05:00Z",
+    "duration": 3120,
+    "primaryUserId": "user_sarah",
+    "direction": "Conference",
+    "scope": "External",
+    "media": "Video",
+    "language": "eng",
+    "workspaceId": "ws_dummy_001"
+  },
+  "parties": [
+    {
+      "id": "party_s1",
+      "emailAddress": "sarah.chen@company.com",
+      "name": "Sarah Chen",
+      "title": "Account Executive",
+      "userId": "user_sarah",
+      "speakerId": "speaker_s1",
+      "affiliation": "Internal"
+    },
+    {
+      "id": "party_p1",
+      "emailAddress": "james.walsh@acmecorp.com",
+      "name": "James Walsh",
+      "title": "VP Engineering",
+      "speakerId": "speaker_p1",
+      "affiliation": "External"
+    }
+  ],
+  "context": [
+    {
+      "system": "Salesforce",
+      "objects": [
+        {
+          "objectType": "Account",
+          "objectId": "001Acme",
+          "fields": [
+            { "name": "Name", "value": "Acme Corp" }
+          ]
+        },
+        {
+          "objectType": "Opportunity",
+          "objectId": "006Acme",
+          "fields": [
+            { "name": "Name", "value": "Acme Platform Expansion" },
+            { "name": "StageName", "value": "Negotiation" },
+            { "name": "Amount", "value": "185000" },
+            { "name": "AccountName", "value": "Acme Corp" }
+          ]
+        }
+      ]
+    }
+  ],
+  "content": {
+    "topics": [
+      { "name": "Pricing", "duration": 936 }
+    ],
+    "trackers": [
+      {
+        "id": "trk_price",
+        "name": "Pricing Discussion",
+        "count": 2,
+        "occurrences": [
+          { "startTime": 90000, "speakerId": "speaker_p1" }
+        ]
+      }
+    ]
+  },
+  "interaction": {
+    "speakers": [
+      { "id": "speaker_s1", "userId": "user_sarah", "talkTime": 1200 },
+      { "id": "speaker_p1", "talkTime": 1800 }
+    ]
+  }
+}

@@ -1,0 +1,57 @@
+databases:
+  - name: intel-db
+    plan: basic-256mb
+    postgresMajorVersion: "16"
+    ipAllowList: []
+
+services:
+  - type: pserv
+    name: intel-embeddings
+    runtime: docker
+    plan: standard
+    dockerfilePath: ./embedding-service/Dockerfile
+    dockerContext: .
+    envVars:
+      - key: PORT
+        value: "10000"
+      - key: EMBEDDING_API_KEY
+        sync: false
+
+  - type: web
+    name: intel-mcp
+    runtime: python
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    preDeployCommand: python scripts/migrate.py
+    startCommand: python -m app.mcp.server
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: intel-db
+          property: connectionString
+      - key: EMBEDDING_SERVICE_URL
+        fromService:
+          name: intel-embeddings
+          type: pserv
+          property: hostport
+      - key: EMBEDDING_API_KEY
+        fromService:
+          name: intel-embeddings
+          type: pserv
+          envVarKey: EMBEDDING_API_KEY
+      - key: INTEL_MCP_API_KEY
+        sync: false
+
+  - type: cron
+    name: intel-scheduler
+    runtime: python
+    plan: starter
+    schedule: "*/30 * * * *"
+    buildCommand: pip install -r requirements.txt
+    startCommand: python cron/sync.py
+    envVars:
+      - key: INTEL_WORKFLOW_TASK_SLUG
+        value: intel-pipeline/load_source
+      - key: RENDER_API_KEY
+        sync: false

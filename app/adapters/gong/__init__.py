@@ -1,0 +1,1 @@
+"""Gong production source adapter."""

@@ -1,0 +1,1 @@
+"""GTM Intel synchronization jobs."""

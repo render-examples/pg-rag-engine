@@ -1,0 +1,32 @@
+{
+  "callId": "5599332235511222779",
+  "transcript": [
+    {
+      "speakerId": "speaker_s1",
+      "topic": "Pricing",
+      "sentences": [
+        {
+          "start": 0,
+          "end": 5200,
+          "text": "Thanks for joining again. Last time we aligned on technical requirements. Today I'd love to cover pricing and timeline."
+        }
+      ]
+    },
+    {
+      "speakerId": "speaker_p1",
+      "topic": "Pricing",
+      "sentences": [
+        {
+          "start": 5500,
+          "end": 14000,
+          "text": "Yes, procurement is involved now. Frankly, the per-seat pricing is higher than we budgeted."
+        },
+        {
+          "start": 14200,
+          "end": 20000,
+          "text": "We need to have something signed by end of Q2 — ideally mid-June — or we lose the project budget."
+        }
+      ]
+    }
+  ]
+}

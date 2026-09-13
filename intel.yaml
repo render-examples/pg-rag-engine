@@ -1,0 +1,65 @@
+version: 1
+
+project:
+  name: render-intelligence
+  resource_prefix: intel
+
+default_adapter: json
+adapters:
+  json:
+    kind: json
+    enabled: true
+    batch_size: 50
+    sequential: true
+    config:
+      path: examples/documents.json
+      ignore_window: true
+  gong:
+    kind: gong
+    enabled: false
+    batch_size: 50
+    sequential: true
+    required_env:
+      - GONG_ACCESS_KEY
+      - GONG_ACCESS_KEY_SECRET
+      - GONG_BASE_URL
+    config:
+      rate_limit_per_second: 3
+      initial_load_days: 90
+      lookback_hours: 24
+
+content:
+  full_text_language: english
+  chunking:
+    strategy: consecutive_units
+    target_tokens: 500
+    overlap_tokens: 80
+    minimum_tokens: 80
+
+embedding:
+  profile_id: nomic-embed-v1.5
+  provider: openai-compatible-private
+  model: nomic-embed
+  dimension: 768
+  endpoint_env: EMBEDDING_SERVICE_URL
+  api_key_env: EMBEDDING_API_KEY
+  document_prefix: "search_document: "
+  query_prefix: "search_query: "
+  batch_size: 32
+  normalized: true
+  model_artifact:
+    repository: blissie/nomic-embed-text-v1.5-Q4_K_M-GGUF
+    filename: nomic-embed-text-v1.5-q4_k_m.gguf
+    revision: 6021f75b03706ff968a5e4973098a27b39da6769
+    pooling: mean
+    context_tokens: 2048
+
+mcp:
+  namespace: intel
+  token_env: INTEL_MCP_API_KEY
+  filters:
+    - source_id
+    - kind
+    - occurred_since
+    - occurred_until
+    - entity

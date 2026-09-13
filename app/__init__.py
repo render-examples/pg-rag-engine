@@ -1,0 +1,1 @@
+"""Render Intelligence Template application."""
