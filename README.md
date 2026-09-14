@@ -7,6 +7,8 @@ network, and exposing citation-backed retrieval through an MCP.
 
 
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/render-examples/pg-rag-engine)
+
 ```text
 Source adapter → Render Workflow → Postgres/pgvector
                                       ↑       ↓
