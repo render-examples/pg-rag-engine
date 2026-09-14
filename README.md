@@ -2,7 +2,7 @@
 
 A fork-and-deploy template for loading external data through Render Workflows,
 normalizing it into Postgres, generating embeddings over Render's private
-network, and exposing citation-backed retrieval through MCP.
+network, and exposing citation-backed, pgvector powered retrieval through an MCP.
 
 ```text
 Source adapter → Render Workflow → Postgres/pgvector
