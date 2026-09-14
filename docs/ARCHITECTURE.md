@@ -31,7 +31,6 @@ rag-scheduler
 rag-mcp
   → rag-db
   → rag-embeddings for query vectors
-  → existing MCP Toolshed
 ```
 
 ## Delivery guarantees
@@ -73,5 +72,4 @@ Render Workflows are deployed separately as `rag-pipeline` because Workflow
 services are not currently Blueprint resources.
 
 Only the Workflow receives source credentials and database access. The
-scheduler only dispatches a task. Toolshed receives only the MCP URL and shared
-service token.
+scheduler only dispatches a task.

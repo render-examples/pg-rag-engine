@@ -179,9 +179,11 @@ Run locally:
 python -m app.mcp.server
 ```
 
-The existing MCP Toolshed uses `providers/rag.ts` with `RAG_MCP_URL` and
-`RAG_MCP_API_KEY`. It preserves the manifest-selected `rag` namespace and
-exposes generic and optional adapter tools without database access.
+Run locally:
+
+```bash
+python -m app.mcp.server
+```
 
 ## Render deployment
 
@@ -201,8 +203,7 @@ render blueprints validate
 render blueprint launch
 ```
 
-Then create the Workflow service and configure the existing Toolshed with the
-deployed MCP URL and matching token.
+Then create the Workflow service.
 
 ## Adding a source
 
