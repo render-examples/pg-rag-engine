@@ -1,8 +1,8 @@
 version: 1
 
 project:
-  name: render-intelligence
-  resource_prefix: intel
+  name: rag-engine
+  resource_prefix: rag
 
 default_adapter: json
 adapters:
@@ -55,8 +55,8 @@ embedding:
     context_tokens: 2048
 
 mcp:
-  namespace: intel
-  token_env: INTEL_MCP_API_KEY
+  namespace: rag
+  token_env: RAG_MCP_API_KEY
   filters:
     - source_id
     - kind

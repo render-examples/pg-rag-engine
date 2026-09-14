@@ -15,29 +15,29 @@ def test_generic_mcp_tool_surface_and_search():
         async with Client(create_mcp(load_config())) as client:
             listed = await client.list_tools()
             assert [tool.name for tool in listed.tools] == [
-                "intel.schema.describe",
-                "intel.sources.list",
-                "intel.documents.list",
-                "intel.documents.get",
-                "intel.search.keyword",
-                "intel.search.semantic",
-                "intel.search.hybrid",
+                "rag.schema.describe",
+                "rag.sources.list",
+                "rag.documents.list",
+                "rag.documents.get",
+                "rag.search.keyword",
+                "rag.search.semantic",
+                "rag.search.hybrid",
             ]
             keyword = await client.call_tool(
-                "intel.search.keyword", {"query": "budget", "source_id": "json"}
+                "rag.search.keyword", {"query": "budget", "source_id": "json"}
             )
             passage = keyword.structured_content["passages"][0]
             assert passage["external_id"] == "sales-note-017"
             assert passage["citation"]["locator"]
 
             semantic = await client.call_tool(
-                "intel.search.semantic",
+                "rag.search.semantic",
                 {"query": "customer onboarding difficulties", "limit": 3},
             )
             assert semantic.structured_content["passages"]
 
             hybrid = await client.call_tool(
-                "intel.search.hybrid",
+                "rag.search.hybrid",
                 {"query": "webhook queue delay", "limit": 3},
             )
             assert hybrid.structured_content["passages"][0]["external_id"] == (
@@ -51,12 +51,12 @@ def test_documents_list_and_get_include_citations():
     async def run():
         async with Client(create_mcp(load_config())) as client:
             listed = await client.call_tool(
-                "intel.documents.list", {"source_id": "json", "limit": 1}
+                "rag.documents.list", {"source_id": "json", "limit": 1}
             )
             document = listed.structured_content["documents"][0]
             assert document["citation"]["source_id"] == "json"
             detail = await client.call_tool(
-                "intel.documents.get", {"document_id": document["id"]}
+                "rag.documents.get", {"document_id": document["id"]}
             )
             assert detail.structured_content["units"]
             assert detail.structured_content["citation"]["document_id"] == document["id"]
@@ -74,7 +74,7 @@ def test_gong_adapter_adds_optional_domain_tools():
         async with Client(create_mcp(replace(config, adapters=adapters))) as client:
             listed = await client.list_tools()
             names = {tool.name for tool in listed.tools}
-            assert {"intel.gong.calls.list", "intel.gong.calls.get"} <= names
+            assert {"rag.gong.calls.list", "rag.gong.calls.get"} <= names
 
     asyncio.run(run())
 

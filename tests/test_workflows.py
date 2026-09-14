@@ -33,7 +33,7 @@ def test_scheduler_dispatches_generic_adapter():
     )
     assert result["run_id"] == "run-1"
     assert observed == {
-        "slug": "intel-pipeline/load_source",
+        "slug": "rag-pipeline/load_source",
         "inputs": {
             "adapter_id": "json",
             "from_datetime": None,

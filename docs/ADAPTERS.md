@@ -16,7 +16,7 @@ Implement `SourceAdapter` from `app/contracts.py`:
 - `persist_projection(...)` optionally writes source-specific relational data.
 
 Register the constructor once in `app/registry.py`, then add an entry to
-`intel.yaml`.
+`rag-engine.yaml`.
 
 ## Canonical requirements
 
@@ -58,7 +58,7 @@ reference.
 
 The Gong adapter demonstrates production complexity: authenticated pagination,
 rate limiting, batched detail/transcript fetches, people and CRM entities,
-transcript locators, and rich projection tables. Enable it in `intel.yaml`, run
+transcript locators, and rich projection tables. Enable it in `rag-engine.yaml`, run
 migrations, and set the three declared Gong environment variables.
 
 ## Contract-test checklist

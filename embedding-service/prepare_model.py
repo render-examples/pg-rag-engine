@@ -8,7 +8,7 @@ from pathlib import Path
 import yaml
 from huggingface_hub import hf_hub_download
 
-manifest = yaml.safe_load(Path("/build/intel.yaml").read_text())
+manifest = yaml.safe_load(Path("/build/rag-engine.yaml").read_text())
 embedding = manifest["embedding"]
 artifact = embedding["model_artifact"]
 

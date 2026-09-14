@@ -7,7 +7,7 @@ from datetime import datetime, timedelta, timezone
 from typing import Any, Sequence
 
 from app.chunking import ConsecutiveUnitChunker
-from app.config import IntelConfig
+from app.config import RagEngineConfig
 from app.contracts import SourceAdapter
 from app.db import connection, execute, fetch_one
 from app.models import RecordRef
@@ -15,7 +15,7 @@ from app.repository import replace_chunks, upsert_document
 
 
 def resolve_window(
-    config: IntelConfig,
+    config: RagEngineConfig,
     adapter_id: str,
     from_datetime: datetime | None,
     to_datetime: datetime | None,
@@ -84,7 +84,7 @@ def finish_sync_run(
 
 
 def process_batch(
-    config: IntelConfig,
+    config: RagEngineConfig,
     adapter: SourceAdapter,
     refs: Sequence[RecordRef],
 ) -> dict[str, Any]:

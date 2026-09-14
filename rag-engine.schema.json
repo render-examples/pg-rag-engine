@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://render.com/schemas/intel-template-v1.json",
-  "title": "Render Intelligence Template",
+  "$id": "https://render.com/schemas/rag-engine-v1.json",
+  "title": "RAG Engine",
   "type": "object",
   "additionalProperties": false,
   "required": ["version", "project", "default_adapter", "adapters", "content", "embedding", "mcp"],

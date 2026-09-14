@@ -1,1 +1,1 @@
-"""GTM Intel synchronization jobs."""
+"""RAG Engine synchronization jobs."""

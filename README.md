@@ -1,4 +1,4 @@
-# Render Intelligence Template
+# RAG Engine
 
 A fork-and-deploy template for loading external data through Render Workflows,
 normalizing it into Postgres, generating embeddings over Render's private
@@ -7,11 +7,11 @@ network, and exposing citation-backed retrieval through MCP.
 ```text
 Source adapter → Render Workflow → Postgres/pgvector
                                       ↑       ↓
-                         private embeddings  Python MCP → MCP Toolshed → agent
+                         private embeddings  Python MCP → agent
 ```
 
 The repository is intentionally an application, not a framework. Fork it, edit
-`intel.yaml`, and keep the full pipeline visible and debuggable.
+`rag-engine.yaml`, and keep the full pipeline visible and debuggable.
 
 ## Included adapters
 
@@ -36,12 +36,12 @@ docker compose up -d postgres
 python scripts/migrate.py
 
 # Build and run the manifest-selected private model
-docker build -f embedding-service/Dockerfile -t intel-embeddings .
-docker run --rm -d --name intel-embeddings \
+docker build -f embedding-service/Dockerfile -t rag-embeddings .
+docker run --rm -d --name rag-embeddings \
   -p 10000:10000 \
   -e PORT=10000 \
   -e EMBEDDING_API_KEY=dev-embedding-key \
-  intel-embeddings
+  rag-embeddings
 
 # Load, chunk, and embed the bundled JSON source
 python scripts/load.py \
@@ -55,8 +55,8 @@ pytest -q
 
 ## Configuration
 
-`intel.yaml` is the only non-secret application configuration. Its schema is
-`intel.schema.json`.
+`rag-engine.yaml` is the only non-secret application configuration. Its schema is
+`rag-engine.schema.json`.
 
 It selects:
 
@@ -88,7 +88,7 @@ adapter adds users, calls, participants, CRM associations, topics, trackers,
 and `gong_call_context`.
 
 The schema is generated for the embedding dimension and full-text language in
-`intel.yaml`. This template targets fresh databases and has no legacy
+`rag-engine.yaml`. This template targets fresh databases and has no legacy
 compatibility layer.
 
 ## Render Workflows
@@ -111,7 +111,7 @@ render workflows tasks list --local
 ```
 
 Render Workflows are currently created outside Blueprints. Create
-`intel-pipeline` from the repository root:
+`rag-pipeline` from the repository root:
 
 ```text
 Build command: pip install -r requirements.txt
@@ -135,12 +135,12 @@ python scripts/start_load_workflow.py \
 
 The default provider calls an OpenAI-compatible private service. The Docker
 builder reads the model repository, filename, immutable revision, alias,
-pooling, and context directly from `intel.yaml`.
+pooling, and context directly from `rag-engine.yaml`.
 
 For a same-dimension model change:
 
 ```bash
-# Edit intel.yaml, rebuild the private service, then:
+# Edit rag-engine.yaml, rebuild the private service, then:
 python scripts/change_embedding_profile.py
 python scripts/embed.py
 ```
@@ -160,18 +160,18 @@ mismatch.
 
 The authenticated Python MCP service exposes:
 
-- `intel.schema.describe`
-- `intel.sources.list`
-- `intel.documents.list`
-- `intel.documents.get`
-- `intel.search.keyword`
-- `intel.search.semantic`
-- `intel.search.hybrid`
+- `rag.schema.describe`
+- `rag.sources.list`
+- `rag.documents.list`
+- `rag.documents.get`
+- `rag.search.keyword`
+- `rag.search.semantic`
+- `rag.search.hybrid`
 
 Every document and passage includes a canonical citation with source,
 document/external IDs, URL, chunk/unit range, and adapter locator. Enabled
-adapters may add tools such as `intel.gong.calls.list` and
-`intel.gong.calls.get`.
+adapters may add tools such as `rag.gong.calls.list` and
+`rag.gong.calls.get`.
 
 Run locally:
 
@@ -179,21 +179,21 @@ Run locally:
 python -m app.mcp.server
 ```
 
-The existing MCP Toolshed uses `providers/intel.ts` with `INTEL_MCP_URL` and
-`INTEL_MCP_API_KEY`. It preserves the manifest-selected `intel` namespace and
+The existing MCP Toolshed uses `providers/rag.ts` with `RAG_MCP_URL` and
+`RAG_MCP_API_KEY`. It preserves the manifest-selected `rag` namespace and
 exposes generic and optional adapter tools without database access.
 
 ## Render deployment
 
 `render.yaml` creates:
 
-- `intel-db`
-- `intel-embeddings`
-- `intel-mcp`
-- `intel-scheduler`
+- `rag-db`
+- `rag-embeddings`
+- `rag-mcp`
+- `rag-scheduler`
 
 The scheduler only has a Render API key and starts
-`intel-pipeline/load_source`; data-source and database credentials remain on the
+`rag-pipeline/load_source`; data-source and database credentials remain on the
 Workflow service.
 
 ```bash
@@ -210,7 +210,7 @@ See [docs/ADAPTERS.md](docs/ADAPTERS.md). In short:
 
 1. Implement `SourceAdapter`.
 2. Register it in `app/registry.py`.
-3. Add its non-secret configuration to `intel.yaml`.
+3. Add its non-secret configuration to `rag-engine.yaml`.
 4. Add projection migrations only when generic metadata/entities are
    insufficient.
 5. Run the shared adapter contract suite and `scripts/doctor.py`.
@@ -229,7 +229,7 @@ embedding-service/
 examples/
 scripts/
 tests/
-intel.yaml
-intel.schema.json
+rag-engine.yaml
+rag-engine.schema.json
 render.yaml
 ```

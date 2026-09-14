@@ -2,7 +2,7 @@ FROM python:3.12-slim AS model-builder
 
 RUN pip install --no-cache-dir huggingface_hub==0.36.0 PyYAML==6.0.2
 WORKDIR /build
-COPY intel.yaml /build/intel.yaml
+COPY rag-engine.yaml /build/rag-engine.yaml
 COPY embedding-service/prepare_model.py /build/prepare_model.py
 RUN python /build/prepare_model.py
 

@@ -16,21 +16,21 @@ storage, embeddings, or generic search.
 ## Data flow
 
 ```text
-intel-scheduler
-  → intel-pipeline/load_source
-      → Adapter.discover
-      → process_batch children
-          → Adapter.fetch_batch
-          → Adapter.normalize
-          → canonical repository
-          → Adapter.persist_projection
-      → embed_pending
-          → intel-embeddings over private network
-      → source checkpoint
+rag-scheduler
+  → rag-pipeline/load_source
+    → Adapter.discover
+    → process_batch children
+        → Adapter.fetch_batch
+        → Adapter.normalize
+        → canonical repository
+        → Adapter.persist_projection
+    → embed_pending
+        → rag-embeddings over private network
+    → source checkpoint
 
-intel-mcp
-  → intel-db
-  → intel-embeddings for query vectors
+rag-mcp
+  → rag-db
+  → rag-embeddings for query vectors
   → existing MCP Toolshed
 ```
 
@@ -69,7 +69,7 @@ service output before accepting traffic.
 ## Deployment
 
 The Blueprint owns Postgres, private embeddings, Python MCP, and the scheduler.
-Render Workflows are deployed separately as `intel-pipeline` because Workflow
+Render Workflows are deployed separately as `rag-pipeline` because Workflow
 services are not currently Blueprint resources.
 
 Only the Workflow receives source credentials and database access. The

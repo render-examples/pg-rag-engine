@@ -14,13 +14,13 @@ from dotenv import load_dotenv
 
 load_dotenv(Path(__file__).resolve().parents[1] / ".env")
 
-from app.config import IntelConfig, load_config
+from app.config import RagEngineConfig, load_config
 from app.db import connection, execute, fetch_all
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def migration_files(config: IntelConfig, include_adapters: set[str]) -> list[Path]:
+def migration_files(config: RagEngineConfig, include_adapters: set[str]) -> list[Path]:
     files = sorted((ROOT / "migrations" / "core").glob("*.sql"))
     enabled = {
         adapter.kind for adapter in config.adapters.values() if adapter.enabled
@@ -36,7 +36,7 @@ def migration_id(path: Path) -> str:
     return str(path.relative_to(ROOT))
 
 
-def render_sql(path: Path, config: IntelConfig) -> str:
+def render_sql(path: Path, config: RagEngineConfig) -> str:
     return (
         path.read_text()
         .replace("{{EMBEDDING_DIMENSION}}", str(config.embedding.dimension))
@@ -70,7 +70,7 @@ def ensure_migration_catalog(conn) -> None:
     )
 
 
-def seed_configuration(conn, config: IntelConfig) -> None:
+def seed_configuration(conn, config: RagEngineConfig) -> None:
     for adapter in config.adapters.values():
         execute(
             conn,

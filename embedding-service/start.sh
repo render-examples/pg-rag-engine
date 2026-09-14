@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Runtime wrapper; build-generated defaults come from intel.yaml.
+# Runtime wrapper; build-generated defaults come from rag-engine.yaml.
 set -euo pipefail
 
 if [[ -f /models/model.env ]]; then

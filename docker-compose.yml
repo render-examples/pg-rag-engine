@@ -4,16 +4,16 @@ services:
     ports:
       - "5434:5432"
     environment:
-      POSTGRES_USER: intel
-      POSTGRES_PASSWORD: intel
-      POSTGRES_DB: intel
+      POSTGRES_USER: rag
+      POSTGRES_PASSWORD: rag
+      POSTGRES_DB: rag
     volumes:
-      - intel_pg_data:/var/lib/postgresql/data
+      - rag_pg_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U intel -d intel"]
+      test: ["CMD-SHELL", "pg_isready -U rag -d rag"]
       interval: 5s
       timeout: 5s
       retries: 5
 
 volumes:
-  intel_pg_data:
+  rag_pg_data:

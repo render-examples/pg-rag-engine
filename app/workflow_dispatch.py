@@ -18,7 +18,7 @@ def start_load_source(
 ) -> dict[str, Any]:
     client = render_client or Render()
     slug = os.environ.get(
-        "INTEL_WORKFLOW_TASK_SLUG", "intel-pipeline/load_source"
+        "RAG_WORKFLOW_TASK_SLUG", "rag-pipeline/load_source"
     ).strip()
     run = client.workflows.start_task(
         slug,

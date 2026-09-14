@@ -1,4 +1,4 @@
-"""Validated application configuration loaded from intel.yaml."""
+"""Validated application configuration loaded from rag-engine.yaml."""
 
 from __future__ import annotations
 
@@ -13,8 +13,8 @@ import jsonschema
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_CONFIG_PATH = ROOT / "intel.yaml"
-SCHEMA_PATH = ROOT / "intel.schema.json"
+DEFAULT_CONFIG_PATH = ROOT / "rag-engine.yaml"
+SCHEMA_PATH = ROOT / "rag-engine.schema.json"
 
 
 class ConfigError(ValueError):
@@ -88,7 +88,7 @@ class McpConfig:
 
 
 @dataclass(frozen=True)
-class IntelConfig:
+class RagEngineConfig:
     version: int
     project_name: str
     resource_prefix: str
@@ -121,9 +121,9 @@ class IntelConfig:
         )
 
 
-def load_config(path: str | Path | None = None) -> IntelConfig:
+def load_config(path: str | Path | None = None) -> RagEngineConfig:
     config_path = Path(
-        path or os.environ.get("INTEL_CONFIG_PATH", DEFAULT_CONFIG_PATH)
+        path or os.environ.get("RAG_CONFIG_PATH", DEFAULT_CONFIG_PATH)
     ).resolve()
     try:
         raw = yaml.safe_load(config_path.read_text())
@@ -165,7 +165,7 @@ def load_config(path: str | Path | None = None) -> IntelConfig:
         },
         model_artifact=EmbeddingArtifact(**embedding_raw["model_artifact"]),
     )
-    return IntelConfig(
+    return RagEngineConfig(
         version=raw["version"],
         project_name=raw["project"]["name"],
         resource_prefix=raw["project"]["resource_prefix"],

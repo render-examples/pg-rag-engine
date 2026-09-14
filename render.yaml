@@ -1,12 +1,12 @@
 databases:
-  - name: intel-db
+  - name: rag-db
     plan: basic-256mb
     postgresMajorVersion: "16"
     ipAllowList: []
 
 services:
   - type: pserv
-    name: intel-embeddings
+    name: rag-embeddings
     runtime: docker
     plan: standard
     dockerfilePath: ./embedding-service/Dockerfile
@@ -18,7 +18,7 @@ services:
         sync: false
 
   - type: web
-    name: intel-mcp
+    name: rag-mcp
     runtime: python
     plan: starter
     buildCommand: pip install -r requirements.txt
@@ -28,30 +28,30 @@ services:
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: intel-db
+          name: rag-db
           property: connectionString
       - key: EMBEDDING_SERVICE_URL
         fromService:
-          name: intel-embeddings
+          name: rag-embeddings
           type: pserv
           property: hostport
       - key: EMBEDDING_API_KEY
         fromService:
-          name: intel-embeddings
+          name: rag-embeddings
           type: pserv
           envVarKey: EMBEDDING_API_KEY
-      - key: INTEL_MCP_API_KEY
+      - key: RAG_MCP_API_KEY
         sync: false
 
   - type: cron
-    name: intel-scheduler
+    name: rag-scheduler
     runtime: python
     plan: starter
     schedule: "*/30 * * * *"
     buildCommand: pip install -r requirements.txt
     startCommand: python cron/sync.py
     envVars:
-      - key: INTEL_WORKFLOW_TASK_SLUG
-        value: intel-pipeline/load_source
+      - key: RAG_WORKFLOW_TASK_SLUG
+        value: rag-pipeline/load_source
       - key: RENDER_API_KEY
         sync: false

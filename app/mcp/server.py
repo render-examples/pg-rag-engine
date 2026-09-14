@@ -17,13 +17,13 @@ from starlette.routing import Route
 
 load_dotenv(Path(__file__).resolve().parents[2] / ".env")
 
-from app.config import IntelConfig, load_config
+from app.config import RagEngineConfig, load_config
 from app.db import connection, fetch_one
 from app.mcp.tools import register_core_tools
 from app.registry import create_embedding_provider
 
 
-def create_mcp(config: IntelConfig) -> MCPServer:
+def create_mcp(config: RagEngineConfig) -> MCPServer:
     server = MCPServer(
         name=f"{config.project_name} MCP",
         version="1.0.0",
@@ -41,7 +41,7 @@ def create_mcp(config: IntelConfig) -> MCPServer:
     return server
 
 
-def readiness(config: IntelConfig) -> dict[str, Any]:
+def readiness(config: RagEngineConfig) -> dict[str, Any]:
     try:
         with connection() as conn:
             row = fetch_one(
@@ -81,7 +81,7 @@ def readiness(config: IntelConfig) -> dict[str, Any]:
         return {"status": "unhealthy", "error": str(exc)}
 
 
-def create_app(config: IntelConfig):
+def create_app(config: RagEngineConfig):
     mcp = create_mcp(config)
     app = mcp.streamable_http_app(
         streamable_http_path="/mcp",

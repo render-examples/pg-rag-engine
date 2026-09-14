@@ -1,1 +1,1 @@
-"""Render Intelligence Template application."""
+"""RAG Engine application."""

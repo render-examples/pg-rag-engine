@@ -5,7 +5,7 @@ from __future__ import annotations
 import math
 from typing import Any
 
-from app.config import IntelConfig
+from app.config import RagEngineConfig
 from app.contracts import EmbeddingProvider
 from app.db import connection, execute, fetch_all
 
@@ -56,7 +56,7 @@ def _refresh_jobs(document_ids: set[str], profile_id: str) -> None:
 
 
 def embed_pending(
-    config: IntelConfig,
+    config: RagEngineConfig,
     provider: EmbeddingProvider,
     *,
     limit: int = 1000,

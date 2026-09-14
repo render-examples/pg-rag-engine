@@ -8,7 +8,7 @@ from typing import Any
 from mcp.server.mcpserver import MCPServer
 from mcp.types import ToolAnnotations
 
-from app.config import IntelConfig
+from app.config import RagEngineConfig
 from app.db import connection, fetch_all, fetch_one
 from app.pipeline.embed import vector_literal
 from app.registry import create_embedding_provider
@@ -54,7 +54,7 @@ def _passage(row: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def register_core_tools(server: MCPServer, config: IntelConfig) -> None:
+def register_core_tools(server: MCPServer, config: RagEngineConfig) -> None:
     namespace = config.mcp.namespace
 
     @server.tool(

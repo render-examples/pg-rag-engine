@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Callable
 
-from app.config import AdapterConfig, EmbeddingConfig, IntelConfig
+from app.config import AdapterConfig, EmbeddingConfig, RagEngineConfig
 from app.contracts import EmbeddingProvider, SourceAdapter
 
 AdapterFactory = Callable[[AdapterConfig], SourceAdapter]
@@ -39,7 +39,7 @@ EMBEDDING_PROVIDERS: dict[str, EmbeddingFactory] = {
 }
 
 
-def create_adapter(config: IntelConfig, adapter_id: str | None = None) -> SourceAdapter:
+def create_adapter(config: RagEngineConfig, adapter_id: str | None = None) -> SourceAdapter:
     adapter_config = config.adapter(adapter_id)
     try:
         factory = ADAPTERS[adapter_config.kind]
@@ -48,7 +48,7 @@ def create_adapter(config: IntelConfig, adapter_id: str | None = None) -> Source
     return factory(adapter_config)
 
 
-def create_embedding_provider(config: IntelConfig) -> EmbeddingProvider:
+def create_embedding_provider(config: RagEngineConfig) -> EmbeddingProvider:
     try:
         factory = EMBEDDING_PROVIDERS[config.embedding.provider]
     except KeyError as exc:
